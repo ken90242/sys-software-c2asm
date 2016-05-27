@@ -15,36 +15,33 @@ import java.util.regex.*;
 public class system_softeware_c2asm {
 	static FileWriter fw;
 	static BufferedWriter bufferOut;
-	public static void main(String args[]) throws IOException{
-		Register AX = new Register("AX");
-		Register BX = new Register("BX");
-		Register CX = new Register("CX");
-		String strLine;
-//		args = new String[2];
-//		args[0] = "cprog.c";
-//		args[1] = "cprog.asm";
-		fw = new FileWriter(new File(args[1]));
-		FileReader fr = new FileReader(args[0]);
-		
-		BufferedReader bufferIn = new BufferedReader(fr);
-		bufferOut = new BufferedWriter(fw);
-		bufferOut.write("\tSTART\t");
-		bufferOut.newLine();
-		while((strLine=bufferIn.readLine())!=null){
-			FILTER(strLine);
+	public static void main(String args[]) {
+		try{
+			Register AX = new Register("AX");
+			Register BX = new Register("BX");
+			Register CX = new Register("CX");
+			String strLine;
+//			args = new String[2];
+//			args[0] = "cprog.c";
+//			args[1] = "cprog.asm";
+			fw = new FileWriter(new File(args[1]));
+			FileReader fr = new FileReader(args[0]);
+			
+			BufferedReader bufferIn = new BufferedReader(fr);
+			bufferOut = new BufferedWriter(fw);
+			bufferOut.write("\tSTART\t");
+			bufferOut.newLine();
+			while((strLine=bufferIn.readLine())!=null){
+				FILTER(strLine);
+			}
+			bufferOut.write("\tEND\t");
+			bufferOut.flush();
+			fr.close();
+			fw.close();
+			System.out.println("Program complete.\nasm file path:" + System.getProperty("user.dir")+"/"+args[1]);
+		}catch(Exception e){
+			System.out.println(e);
 		}
-		bufferOut.write("\tEND\t");
-		bufferOut.flush();
-		fr.close();
-		fw.close();
-//		FILTER("INT AAA, BBB=8, CCC=2");
-//		FILTER("INT DDD");
-//		FILTER("AAA = (BBB + CCC) * CCC");
-//		FILTER("PRINT(AAA)");
-//		FILTER("DDD = AAA / CCC");
-//		FILTER("PRINT(DDD)");
-//		FILTER("Z=(BBB*CCCC)+(AAA+CCC)*CCC+DDD");
-//		FILTER("Z=(B*C)+(A+C)*(A*B)+(B+C)");
 	}
 	
 	public static void FILTER(String str) throws IOException { // Assign works to different modules
@@ -96,6 +93,7 @@ public class system_softeware_c2asm {
 	
 	public static void CALCULATE(String str) throws IOException {
 		str = str.replaceAll("\\s+","");
+		str = str.replaceAll(";+","");
 		String desc = str.split("=")[0];
 		Register res = Arithmetic.eval(Arithmetic.postfix(str.split("=")[1]));
 		Arithmetic.move(res, desc); 
@@ -262,8 +260,6 @@ class Arithmetic {
 			        num_stack.push(operation(NextToken,Str_pre,Str_post));
 			    }
 		    }	
-
-				
 		}
 		return (Register) num_stack.pop();
 	}
