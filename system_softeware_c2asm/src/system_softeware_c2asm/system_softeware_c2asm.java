@@ -13,8 +13,8 @@ import java.util.Stack;
 import java.util.regex.*;
 
 public class system_softeware_c2asm {
-	static FileWriter fw;
-	static BufferedWriter bufferOut;
+	public static FileWriter fw;
+	public static BufferedWriter bufferOut;
 	public static void main(String args[]) {
 		try{
 			Register AX = new Register("AX");
@@ -66,7 +66,7 @@ public class system_softeware_c2asm {
 		
 	}
 	
-	public static void DECLARE(String str) throws IOException {
+	private static void DECLARE(String str) throws IOException {
 		Pattern p = Pattern.compile("([^ ,;]+)");
 		Matcher m = p.matcher(str);
 
@@ -82,7 +82,7 @@ public class system_softeware_c2asm {
 		}
 	}
 	
-	public static void WRITE(String str) throws IOException {
+	private static void WRITE(String str) throws IOException {
 		Pattern p = Pattern.compile("([^ ();]+)");
 		Matcher m = p.matcher(str);
 		if (m.find()) {
@@ -91,7 +91,7 @@ public class system_softeware_c2asm {
 		}
 	}
 	
-	public static void CALCULATE(String str) throws IOException {
+	private static void CALCULATE(String str) throws IOException {
 		str = str.replaceAll("\\s+","");
 		str = str.replaceAll(";+","");
 		String desc = str.split("=")[0];
@@ -103,9 +103,9 @@ public class system_softeware_c2asm {
 }
 
 class Arithmetic {
-	public static List<String> operators = Arrays.asList("(",")","+","-","*","/");
+	private static List<String> operators = Arrays.asList("(",")","+","-","*","/");
 
-	public static String translateSymbol(String operator){
+	private static String translateSymbol(String operator){
 		String symbol="";
 		switch(operator){
 			case "+":
@@ -176,7 +176,7 @@ class Arithmetic {
 	
 	
 	
-	public static int comparePriority(String A,String B) {
+	private static int comparePriority(String A,String B) {
 
 		/*	return 1, if A>B
 		 *		  -1, if A<B
@@ -191,7 +191,7 @@ class Arithmetic {
 			return 0;
 		}
 	}
-	public static int getPriority(String str){
+	private static int getPriority(String str){
 		/*
 		 * a_class > b_class > c_class
 		 * 
