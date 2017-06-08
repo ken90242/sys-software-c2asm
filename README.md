@@ -1,7 +1,6 @@
 # Simple translator from C to ASM(assembly)
 #### Final project in System-software class
 ## Build JAR PACKAGE
---------------------
 (in ./sys-software-c2asm)
 1. Compile .java file
 ```
