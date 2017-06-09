@@ -1,5 +1,6 @@
 # Simple translator from C to ASM(assembly)
 #### Final project in System-software class
+![image](https://github.com/ken90242/sys-software-c2asm/blob/master/demo.gif)
 ## Build JAR PACKAGE
 (in ./sys-software-c2asm)
 1. Compile .java file
@@ -18,5 +19,3 @@ $ jar uvfm [target.jar] manifest.mf
 ```
 java -jar [target.jar] [source.c] [output.asm]
 ```
-## Demo ##
-![image](https://github.com/ken90242/sys-software-c2asm/blob/master/demo.gif)
